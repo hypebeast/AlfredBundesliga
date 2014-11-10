@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.alfredapp.sruml.bundesligascores</string>
+	<key>connections</key>
+	<dict/>
+	<key>createdby</key>
+	<string>Sebastian Ruml</string>
+	<key>description</key>
+	<string>Show the matches and scores for a matchday</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>BundesligaScores</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>116</integer>
+				<key>keyword</key>
+				<string>bundesliga</string>
+				<key>runningsubtext</key>
+				<string>Feteching scores...</string>
+				<key>script</key>
+				<string>python bundesligascores.py "{query}"</string>
+				<key>title</key>
+				<string>Show Matches and Scores for a Bundesliga Matchday</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>9B6F7FE3-75CC-461F-BECD-3C96C2909C2F</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>9B6F7FE3-75CC-461F-BECD-3C96C2909C2F</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>http://sebastianruml.com</string>
+</dict>
+</plist>
