@@ -1,3 +1,3 @@
 # BundesligaAlfred
 
-Alfred workflow for getting resulst for the 1. Bundesliga.
+Alfred workflow for getting results for the 1. Bundesliga.
