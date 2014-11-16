@@ -6,7 +6,7 @@ class Bundesliga:
     ZWEITE_LIGA = 'bl2'
 
     def __init__(self):
-        self.openLigaDBApiUrl = 'http://openligadb-json.herokuapp.com/api'
+        self.openLigaDBApiUrl = 'http://openligadb-json-api.herokuapp.com/api'
 
     def getMatchdayResults(self, matchday=0):
         """
@@ -20,7 +20,7 @@ class Bundesliga:
         requestUrl += '?group_order_id=%s&league_saison=%s&league_shortcut=%s' % (matchday, saison, self.ERSTE_LIGA)
         data = json.load(urllib2.urlopen(requestUrl))
 
-        return data['matchdata']
+        return data['GetMatchdataByGroupLeagueSaisonResult']
 
     def getTable(self, season, league=ERSTE_LIGA):
         """
@@ -30,8 +30,8 @@ class Bundesliga:
         teams = self.getTeams(season, league)
         table = {}
         for team in teams:
-            table[team['team_id']] = {
-                    'team_name': team['team_name'],
+            table[team['teamID']] = {
+                    'team_name': team['teamName'],
                     'points': 0,
                     'wins': 0,
                     'losses': 0,
@@ -43,13 +43,13 @@ class Bundesliga:
         matchData = self.getMatchDataByLeagueSaison(season, league)
 
         for match in matchData:
-            if not match['match_is_finished']:
+            if not match['matchIsFinished']:
                 continue
 
-            team1 = match['id_team1']
-            team2 = match['id_team2']
-            goals_team1 = int(match['points_team1'])
-            goals_team2 = int(match['points_team2'])
+            team1 = match['idTeam1']
+            team2 = match['idTeam2']
+            goals_team1 = int(match['pointsTeam1'])
+            goals_team2 = int(match['pointsTeam2'])
 
             teamData1 = table[team1]
             teamData2 = table[team2]
@@ -82,7 +82,7 @@ class Bundesliga:
         """
         requestUrl = self.openLigaDBApiUrl + '/current_group?league_shortcut=bl1'
         data = json.load(urllib2.urlopen(requestUrl))
-        return data['group_order_id']
+        return data['GetCurrentGroupResult']['groupOrderID']
 
     def getRecentMatchday(self):
         """
@@ -107,8 +107,8 @@ class Bundesliga:
         data = json.load(urllib2.urlopen(requestUrl))
 
         teams = []
-        for team in data['team']:
-            teams.append(team)
+        for team in data['GetTeamsByLeagueSaisonResult']:
+            teams.append(team['Team'])
 
         return teams
 
@@ -119,8 +119,8 @@ class Bundesliga:
         data = json.load(urllib2.urlopen(requestUrl))
 
         matchData = []
-        for match in data['matchdata']:
-            matchData.append(match)
+        for match in data['GetMatchdataByLeagueSaisonResult']:
+            matchData.append(match['Matchdata'])
 
         return matchData
 

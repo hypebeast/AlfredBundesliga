@@ -8,7 +8,7 @@ from workflow import Workflow
 
 
 def parseDateTime(time):
-    return datetime.datetime.strptime(time[:-6], '%Y-%m-%dT%H:%M:%S')
+    return datetime.datetime.strptime(time, '%a, %d %b %Y %H:%M:%S %Z')
 
 
 def getCurrentResults(bundesliga):
@@ -28,30 +28,32 @@ def processMatches(matches):
         return
 
     for match in matches:
+        match = match['Matchdata']
         goalsInfo = ""
         now = datetime.datetime.utcnow()
-        matchDate = parseDateTime(match['match_date_time_utc'])
+        matchDate = parseDateTime(match['matchDateTimeUTC'])
         if matchDate > now:
             status = "Starts at: " + matchDate.strftime('%H:%M %d.%m.%Y')
             points = "-:-"
         else:
-            if match['match_is_finished'] == True:
+            if match['matchIsFinished'] == True:
                 status = 'Finished'
             else:
                 status = 'Running'
 
-            if match['goals'] != None and match['goals']['goal'] != None:
-                goals = match['goals']['goal']
+            if match['goals'] != None and len(match['goals']) > 0:
+                goals = match['goals']
                 for goal in goals:
-                    if 'goal_getter_name' in goal:
-                        goalsInfo += goal['goal_getter_name'] + ', '
+                    goal = goal['Goal']
+                    if 'goalGetterName' in goal:
+                        goalsInfo += goal['goalGetterName'] + ', '
 
                 goalsInfo = goalsInfo[:-2]
                 goalsInfo = '(' + goalsInfo + ')'
 
-            points = match['points_team1'] + ":" + match['points_team2']
+            points = str(match['pointsTeam1']) + ":" + str(match['pointsTeam2'])
 
-        title = match['name_team1'] + ' - ' + match['name_team2']
+        title = match['nameTeam1'] + ' - ' + match['nameTeam2']
         subtitle = points + '   ' + status + '  ' + goalsInfo
         wf.add_item(title=title,
                     subtitle=subtitle)
